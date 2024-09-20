@@ -1,0 +1,24 @@
+// Phenotype library name
+
+phenotype "ifu_covid_19_module" version "1";
+
+include ClarityCore version "1.0" called Clarity;
+
+termset iv_jaundice_terms: [
+    "jaundice"," phototherapy"," bili lights"," bili blanket"," bili"
+];
+
+define final iv_jaundice_unstructured:
+    Clarity.ProviderAssertion({
+		termset: [iv_jaundice_terms]
+	});
+
+    define final iv_jaundice:
+    Tuple {
+        "questionConcept": "59",
+        "answerValue": iv_jaundice_unstructured.term,
+        "answerType": "String",
+        "sourceNote": iv_jaundice_unstructured.sentence
+    }
+where iv_jaundice_unstructured;
+
